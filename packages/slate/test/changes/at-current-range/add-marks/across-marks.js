@@ -27,14 +27,19 @@ export const output = (
   <value>
     <document>
       <paragraph>
-        <anchor />
         Some{' '}
-        <b>
-          <u>bold</u>
-        </b>
+        <u>
+          <b>
+            <anchor />
+            bold
+          </b>
+        </u>
         <u> and some </u>
+        <u>
+          <i>ita</i>
+        </u>
         <i>
-          <u>ita</u>lic
+          <focus />lic
         </i>
       </paragraph>
     </document>
