@@ -1,7 +1,7 @@
 {
-  "name": "slate",
+  "name": "@aha-app/slate",
   "description": "A completely customizable framework for building rich text editors.",
-  "version": "0.33.6",
+  "version": "0.33.7-merged-backports.2",
   "license": "MIT",
   "repository": "git://github.com/ianstormtaylor/slate.git",
   "main": "lib/slate.js",
