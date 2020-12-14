@@ -829,6 +829,7 @@ Commands.insertFragmentAtRange = (editor, range, fragment) => {
     // If the starting block is empty, we replace it entirely with the first block
     // of the fragment, since this leads to a more expected behavior for the user.
     if (
+      startBlock.type !== 'code' &&
       !editor.isVoid(startBlock) &&
       startBlock.text === '' &&
       !startBlock.findDescendant(n => editor.isVoid(n))
