@@ -619,8 +619,6 @@ class Content extends React.Component {
     const style = {
       // Prevent the default outline styles.
       outline: 'none',
-      // Preserve adjacent whitespace and new lines.
-      whiteSpace: 'pre-wrap',
       // Allow words to break if they are too long.
       wordWrap: 'break-word',
       // COMPAT: In iOS, a formatting menu with bold, italic and underline
