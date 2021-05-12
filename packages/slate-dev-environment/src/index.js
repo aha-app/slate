@@ -134,6 +134,8 @@ function getAndroidApiVersion() {
  * @type {Boolean}
  */
 
+console.log('index.js', { browser, os })
+
 export const IS_CHROME = browser === 'chrome'
 export const IS_OPERA = browser === 'opera'
 export const IS_FIREFOX = browser === 'firefox'

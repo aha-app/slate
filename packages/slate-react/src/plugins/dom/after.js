@@ -47,6 +47,8 @@ function AfterPlugin(options = {}) {
     const { value } = editor
     const isSynthetic = !!event.nativeEvent
 
+    console.log('isSynthetic', isSynthetic)
+
     // If the event is synthetic, it's React's polyfill of `beforeinput` that
     // isn't a true `beforeinput` event with meaningful information. It only
     // gets triggered for character insertions, so we can just insert directly.
@@ -60,15 +62,18 @@ function AfterPlugin(options = {}) {
       if (IS_MAC && IS_CHROME) {
         const window = getWindow(event.target)
         const domSelection = window.getSelection()
-
+        console.log('IS_MAC && IS_CHROME')
+        console.log('!domSelection.isCollapsed && value.selection.isCollapsed && !editor.isInCompositionMode()', { 'domSelection.isCollapsed': domSelection.isCollapsed, 'value.selection.isCollapsed': value.selection.isCollapsed, 'editor.isInCompositionMode()': editor.isInCompositionmode() })
         if (
           !domSelection.isCollapsed &&
           value.selection.isCollapsed &&
           !editor.isInCompositionMode()
         ) {
           const range = editor.findRange(domSelection)
+          console.log({ range, 'event.data': event.data })
           editor.insertTextAtRange(range, event.data)
         } else {
+          console.log({ 'event.data': event.data })
           editor.insertText(event.data)
         }
       } else {
