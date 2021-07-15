@@ -2,6 +2,7 @@ import Debug from 'debug'
 import getWindow from 'get-window'
 import ReactDOM from 'react-dom'
 import diffText from './diff-text'
+import warning from 'tiny-warning'
 
 /**
  * @type {Debug}
@@ -551,8 +552,11 @@ function CompositionManager(editor) {
         // consequences of doing this are not entirely clear. The cursor does
         // wild things on Android, maybe a result of doing this, but at least
         // the cursor does something when we have this in there.
-        console.error("Selection was not found.");
-        return;     
+        warning(
+          false,
+          'Selection was not found. You may experience further errors.'
+        )
+        return
       }
 
       const anchorFix = fixTextAndOffset(
