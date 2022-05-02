@@ -27,7 +27,7 @@ function QueriesPlugin() {
       return null
     }
 
-    if (!path.size) {
+    if (!path || !path.size) {
       return content.ref.current || null
     }
 
