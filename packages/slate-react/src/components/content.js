@@ -308,7 +308,8 @@ class Content extends React.Component {
 
       const { startContainer, startOffset, endContainer, endOffset } = range
 
-      // If the new range matches the current selection, there is nothing to fix.
+      // If the new range matches the current selection, there is nothing to fix,
+      // besides scrolling to the selection.
       // COMPAT: The native `Range` object always has it's "start" first and "end"
       // last in the DOM. It has no concept of "backwards/forwards", so we have
       // to check both orientations here. (2017/10/31)
@@ -323,6 +324,12 @@ class Content extends React.Component {
             endContainer === current.startContainer &&
             endOffset === current.startOffset)
         ) {
+          // Only scroll to selection when a user action is performed
+          if (editor.userActionPerformed() === true) {
+            // Scroll to the selection, in case it's out of view.
+            scrollToSelection(native)
+          }
+
           return
         }
       }
