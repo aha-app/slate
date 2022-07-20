@@ -525,6 +525,23 @@ class Content extends React.Component {
       }
     }
 
+    // React sends a synthetic `select` event after certain events
+    // (like `keydown`) if the selection has changed. This can cause
+    // onSelect handlers to run in the same event loop, after the
+    // value has been modified, but before the component has
+    // rerendered.
+    //
+    // When this happens, the browser value is out of sync with the
+    // editor value, so browser selections may no longer
+    // apply. Additionally, the selection set by the browser overrides
+    // the selection set by Slate, putting the cursor in the wrong position.
+    //
+    // If Slate changes the document, it knows better than the browser
+    // where the selection would go, so ignore the `select` event.
+    if (handler === 'onSelect' && this.props.editor.operations.size > 0) {
+      return
+    }
+
     this.props.onEvent(handler, event)
   }
 
