@@ -44,7 +44,13 @@ function AfterPlugin(options = {}) {
     // If the event is synthetic, it's React's polyfill of `beforeinput` that
     // isn't a true `beforeinput` event with meaningful information. It only
     // gets triggered for character insertions, so we can just insert directly.
-    if (isSynthetic) {
+    //
+    // In Chrome 105, the onBeforeInput event stopped being synthetic but it
+    // appears that the implementation is somehow incomplete. getTargetRanges
+    // returns an empty array when it should return some value.
+    // Both these conditions prevent the preventDefault() from ever happening
+    // so the onInput event fires and causes the cursor to jump around.
+    if (isSynthetic || event.getTargetRanges().length === 0) {
       event.preventDefault()
       editor.insertText(event.data)
       return next()
