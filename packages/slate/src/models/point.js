@@ -1,5 +1,6 @@
 import isPlainObject from 'is-plain-object'
 import warning from 'tiny-warning'
+import invariant from 'tiny-invariant'
 import { Record } from 'immutable'
 
 import KeyUtils from '../utils/key-utils'
@@ -306,7 +307,7 @@ class Point extends Record(DEFAULTS) {
       key = path
       path = key === this.key ? this.path : null
     } else {
-      key = path.equals(this.path) ? this.key : null
+      key = path && path.equals(this.path) ? this.key : null
     }
 
     const point = this.merge({ key, path, offset })
@@ -347,7 +348,63 @@ class Point extends Record(DEFAULTS) {
    * @return {Point}
    */
 
+  resolveToTextNode(node) {
+    // If both the key and path are null, there's no reference to a node, so
+    // make sure it is entirely unset.
+    if (this.key == null && this.path == null) {
+      return this.setOffset(null)
+    }
+
+    const { key, offset, path } = this
+
+    // PERF: this function gets called a lot.
+    // to avoid creating the key -> path lookup table, we attempt to look up by path first.
+    let target = path && node.getNode(path)
+
+    if (!target) {
+      target = node.getNode(key)
+
+      if (target) {
+        // There is a misalignment of path and key
+        const point = this.merge({
+          path: node.getPath(key),
+        })
+
+        return point
+      }
+    }
+
+    if (!target) {
+      throw new Error("A point's `path` or `key` was invalid and was reset!")
+    }
+
+    if (target.object !== 'text') {
+      throw new Error('A point should not reference a non-text node!')
+    }
+
+    if (target && path && key && key !== target.key) {
+      throw new Error("A point's `key` did not match its `path`!")
+    }
+
+    const point = this.merge({
+      key: target.key,
+      path: path == null ? node.getPath(target.key) : path,
+      offset: offset == null ? 0 : Math.min(offset, target.text.length),
+    })
+
+    return point
+  }
+
+  /**
+   * Deprecated.
+   */
+
   normalize(node) {
+    warning(
+      false,
+      'As of slate@0.48 the `normalize` method has been deprecated. Use the `getInsertPoint` editor query instead.'
+    )
+
     // If both the key and path are null, there's no reference to a node, so
     // make sure it is entirely unset.
     if (this.key == null && this.path == null) {

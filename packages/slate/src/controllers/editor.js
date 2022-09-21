@@ -320,8 +320,7 @@ class Editor {
 
     Object.defineProperty(next, 'change', {
       get() {
-        invariant(
-          false,
+        throw new Error(
           'As of Slate 0.42, the `editor` is no longer passed as the third argument to event handlers. You can access it via `change.editor` instead.'
         )
       },
@@ -329,7 +328,7 @@ class Editor {
 
     Object.defineProperty(next, 'onChange', {
       get() {
-        invariant(
+        throw new Error(
           false,
           'As of Slate 0.42, the `editor` is no longer passed as the third argument to event handlers. You can access it via `change.editor` instead.'
         )
@@ -338,8 +337,7 @@ class Editor {
 
     Object.defineProperty(next, 'props', {
       get() {
-        invariant(
-          false,
+        throw new Error(
           'As of Slate 0.42, the `editor` is no longer passed as the third argument to event handlers. You can access it via `change.editor` instead.'
         )
       },
@@ -347,8 +345,7 @@ class Editor {
 
     Object.defineProperty(next, 'schema', {
       get() {
-        invariant(
-          false,
+        throw new Error(
           'As of Slate 0.42, the `editor` is no longer passed as the third argument to event handlers. You can access it via `change.editor` instead.'
         )
       },
@@ -356,8 +353,7 @@ class Editor {
 
     Object.defineProperty(next, 'stack', {
       get() {
-        invariant(
-          false,
+        throw new Error(
           'As of Slate 0.42, the `editor` is no longer passed as the third argument to event handlers. You can access it via `change.editor` instead.'
         )
       },
