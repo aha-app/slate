@@ -1,5 +1,4 @@
 import isPlainObject from 'is-plain-object'
-import invariant from 'tiny-invariant'
 import { Record, Set, List } from 'immutable'
 
 import Annotation from './annotation'
@@ -885,15 +884,13 @@ class Value extends Record(DEFAULTS) {
    */
 
   get history() {
-    invariant(
-      false,
+    throw new Error(
       'As of Slate 0.42.0, the `value.history` model no longer exists, and the history is stored in `value.data` instead using plugins.'
     )
   }
 
   change() {
-    invariant(
-      false,
+    throw new Error(
       'As of Slate 0.42.0, value object are no longer schema-aware, and the `value.change()` method is no longer available. Use the `editor.change()` method on the new `Editor` controller instead.'
     )
   }
