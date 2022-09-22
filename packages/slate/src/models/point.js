@@ -1,6 +1,5 @@
 import isPlainObject from 'is-plain-object'
 import warning from 'tiny-warning'
-import invariant from 'tiny-invariant'
 import { Record } from 'immutable'
 
 import KeyUtils from '../utils/key-utils'

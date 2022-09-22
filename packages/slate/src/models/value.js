@@ -1,5 +1,4 @@
 import isPlainObject from 'is-plain-object'
-import invariant from 'tiny-invariant'
 import warning from 'tiny-warning'
 import { Record, Set, List } from 'immutable'
 
