@@ -375,15 +375,15 @@ class Point extends Record(DEFAULTS) {
     }
 
     if (!target) {
-      invariant(false, "A point's `path` or `key` was invalid and was reset!")
+      throw new Error("A point's `path` or `key` was invalid and was reset!")
     }
 
     if (target.object !== 'text') {
-      invariant(false, 'A point should not reference a non-text node!')
+      throw new Error('A point should not reference a non-text node!')
     }
 
     if (target && path && key && key !== target.key) {
-      invariant(false, "A point's `key` did not match its `path`!")
+      throw new Error("A point's `key` did not match its `path`!")
     }
 
     const point = this.merge({
