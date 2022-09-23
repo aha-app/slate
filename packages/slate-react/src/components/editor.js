@@ -2,7 +2,6 @@ import Debug from 'debug'
 import React from 'react'
 import SlateTypes from 'slate-prop-types'
 import Types from 'prop-types'
-import invariant from 'tiny-invariant'
 import memoizeOne from 'memoize-one'
 import warning from 'tiny-warning'
 import omit from 'lodash/omit'
@@ -335,15 +334,13 @@ class Editor extends React.Component {
   }
 
   get schema() {
-    invariant(
-      false,
+    throw new Error(
       'As of Slate 0.42, the `editor.schema` property no longer exists, and its functionality has been folded into the editor itself. Use the `editor` instead.'
     )
   }
 
   get stack() {
-    invariant(
-      false,
+    throw new Error(
       'As of Slate 0.42, the `editor.stack` property no longer exists, and its functionality has been folded into the editor itself. Use the `editor` instead.'
     )
   }
