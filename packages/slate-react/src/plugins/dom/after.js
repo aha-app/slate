@@ -50,7 +50,8 @@ function AfterPlugin(options = {}) {
     // returns an empty array when it should return some value.
     // Both these conditions prevent the preventDefault() from ever happening
     // so the onInput event fires and causes the cursor to jump around.
-    if (isSynthetic || event.getTargetRanges().length === 0) {
+
+    if (isSynthetic || (event.getTargetRanges().length === 0 && event.data)) {
       event.preventDefault()
       editor.insertText(event.data)
       return next()
