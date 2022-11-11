@@ -647,10 +647,6 @@ class Content extends React.Component {
       whiteSpace: 'pre-wrap',
       // Allow words to break if they are too long.
       wordWrap: 'break-word',
-      // COMPAT: In iOS, a formatting menu with bold, italic and underline
-      // buttons is shown which causes our internal value to get out of sync in
-      // weird ways. This hides that. (2016/06/21)
-      ...(readOnly ? {} : { WebkitUserModify: 'read-write-plaintext-only' }),
       // Allow for passed-in styles to override anything.
       ...props.style,
     }
