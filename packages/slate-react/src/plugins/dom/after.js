@@ -147,7 +147,47 @@ function AfterPlugin(options = {}) {
           selection.marks ||
           editor.getInsertMarksAtRange(value.selection, value.document)
 
-        editor.insertTextAtRange(range, text, marks)
+        let resolvedRange = range
+
+        // COMPAT: Browsers may send a range that's on the other side
+        // of a node from value.selection. When this happens, use
+        // value.selection as the range, to be consistent with how
+        // editor.insertText would have worked.
+        if (
+          range.isCollapsed &&
+          selection.isCollapsed &&
+          range.anchor.path !== selection.anchor.path
+        ) {
+          const { anchor: browserPoint } = range
+          const { anchor: valuePoint } = selection
+
+          const node = document.getDescendant(browserPoint.path)
+          const atStartOfNode = browserPoint.offset === 0
+          const atEndOfNode = browserPoint.offset === node.text.length
+
+          if (atStartOfNode) {
+            const prevText = document.getPreviousText(browserPoint.path)
+            const valueText = document.getDescendant(valuePoint.path)
+
+            if (
+              valueText === prevText &&
+              valuePoint.offset === valueText.length
+            ) {
+              resolvedRange = value.selection
+            }
+          }
+
+          if (atEndOfNode) {
+            const nextText = document.getNextText(browserPoint.path)
+            const valueText = document.getDescendant(valuePoint.path)
+
+            if (valueText === nextText && valuePoint.offset === 0) {
+              resolvedRange = value.selection
+            }
+          }
+        }
+
+        editor.insertTextAtRange(resolvedRange, text, marks)
 
         // If the text was successfully inserted, and the selection had marks
         // on it, unset the selection's marks.
