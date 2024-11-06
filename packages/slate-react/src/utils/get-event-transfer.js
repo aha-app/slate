@@ -45,7 +45,7 @@ function getEventTransfer(event) {
 
   // If there isn't a fragment, but there is HTML, check to see if the HTML is
   // actually an encoded fragment.
-  if (!fragment && html && ~html.indexOf(` ${DATA_ATTRS.FRAGMENT}="`)) {
+  if (!fragment && html && ~html.indexOf(` ${DATA_ATTRS.FRAGMENT}="`) && !transfer.types.includes('application/x-aha-v2-fragment')) {
     const matches = FRAGMENT_MATCHER.exec(html)
     const [full, encoded] = matches // eslint-disable-line no-unused-vars
     if (encoded) fragment = encoded
